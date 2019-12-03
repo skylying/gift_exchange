@@ -2,13 +2,97 @@
 <html>
 <head>
 	<title>Hello world</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
+<style type="text/css">
+	.highlight {
+		/*background: pink;*/
+	}
+</style>
 <body>
-<div class="container">
-	<h1>Hello world</h1>
-</div>
+<div class="container-fluid">
+	<h1>Number Generator</h1>
+	<form>
+	  <div class="form-group">
+	    <label for="guest-number">Number Of Guests</label>
+	    <input type="number" class="form-control" id="guest-number" aria-describedby="emailHelp" placeholder="Number" value="10">
+	  </div>
+	  <button id="generate-btn" type="button" class="btn btn-primary">Generate</button>
+	</form>
 
+	<table class="table table-striped" id="table">
+		<thead>
+			<tr>
+				<th>Gift Owner</th>
+				<th>Random Number</th>				
+			</tr>
+		</thead>
+		<tbody id="table-body">
+		</tbody>
+	</table>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		// Get guest number
+		$('#generate-btn').on('click', function(){
+			var guestNumber = $('#guest-number').val();
+			GenerateTable(guestNumber);
+		})
+
+		function GenerateTable(number) {
+			console.log(number);
+			var rows = number;
+			var guestArr = [];
+			var giftList = [];
+			var cardOnGiftList = [];
+			for (var i = 1; i <= number; i++) {
+				// Create array with random number
+				giftList[i-1] = i;
+				guestArr[i-1] = i;
+			}
+			//console.log(randArr);
+			//var randArrLength = randArr.length;
+			//var randArrClone = randArr.slice(0);
+			$(guestArr).each(function(key, ele){
+				// Pop a random element from giftList
+				console.log("Current Guest = " + ele);
+				var randNumber = giftList.splice(Math.floor(Math.random()*giftList.length), 1);
+				while (ele == randNumber) {
+					console.log("Duplicated gift number, redraw !!, (" + randNumber + ")");
+					giftList.push(randNumber[0]);
+					randNumber = giftList.splice(Math.floor(Math.random()*giftList.length), 1);
+				}
+				console.log("Random Gift Number = " + randNumber);
+				var a = [ele, randNumber[0]];
+				cardOnGiftList.push(a);
+			})
+			console.log("cardOnGiftList = ")
+			console.log(cardOnGiftList);
+
+			var tableHTML = createTableRow(cardOnGiftList);
+		}
+
+
+
+		function createTableRow(numberCardArr) {
+			var html;
+			$(numberCardArr).each(function(k, arr){
+				var guestNumber = arr[0];
+				var giftNumber = arr[1];
+				$('<tr/>', {
+				    //'class':'myClass',
+				    'html':'<td>' + guestNumber + '</td><td class="highlight">' + giftNumber + '</td>',
+				    //'click':function(){ alert(this.id) },
+				    //'mouseenter':function(){ $(this).css('color', 'red'); },
+				    //'mouseleave':function(){ $(this).css('color', 'black'); }
+				}).appendTo('#table-body');
+			})
+		}
+	})
+</script>
 </body>
 </html>
