@@ -69,10 +69,15 @@
 				// Pop a random element from giftList
 				console.log("Current Guest = " + ele);
 				var randNumber = giftList.splice(Math.floor(Math.random()*giftList.length), 1);
-				while (ele == randNumber) {
+				var retryCount = 1;
+				while (ele == randNumber && retryCount <= 10) {
 					console.log("Duplicated gift number, redraw !!, (" + randNumber + ")");
 					giftList.push(randNumber[0]);
 					randNumber = giftList.splice(Math.floor(Math.random()*giftList.length), 1);
+					retryCount++;
+				}
+				if (retryCount == 10) {
+					alert("Please refresh page, Whild Loop hit limits");
 				}
 				console.log("Random Gift Number = " + randNumber);
 				var a = [ele, randNumber[0]];
