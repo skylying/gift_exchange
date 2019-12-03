@@ -15,15 +15,16 @@
 </style>
 <body>
 <div class="container-fluid">
-	<h1>Number Generator</h1>
+	<h3>Christmas Gift Exchange</h3>
 	<form>
 	  <div class="form-group">
 	    <label for="guest-number">Number Of Guests</label>
 	    <input type="number" class="form-control" id="guest-number" aria-describedby="emailHelp" placeholder="Number" value="10">
 	  </div>
 	  <button id="generate-btn" type="button" class="btn btn-primary">Generate</button>
+	  <button id="clear-btn" type="button" class="btn btn-info">Clear</button>
 	</form>
-
+	<br/>
 	<table class="table table-striped" id="table">
 		<thead>
 			<tr>
@@ -39,8 +40,15 @@
 	$(document).ready(function(){
 		// Get guest number
 		$('#generate-btn').on('click', function(){
+			$('#table-body').empty();
 			var guestNumber = $('#guest-number').val();
 			GenerateTable(guestNumber);
+		})
+
+		// Get guest number
+		$('#clear-btn').on('click', function(){
+			$('#table-body').empty();
+			var guestNumber = $('#guest-number').val('');
 		})
 
 		function GenerateTable(number) {
