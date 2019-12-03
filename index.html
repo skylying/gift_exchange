@@ -77,7 +77,7 @@
 					retryCount++;
 				}
 				if (retryCount == 10) {
-					alert("Please refresh page, Whild Loop hit limits");
+					throw new Error("Please refresh page, Whild Loop hit limits");
 				}
 				console.log("Random Gift Number = " + randNumber);
 				var a = [ele, randNumber[0]];
